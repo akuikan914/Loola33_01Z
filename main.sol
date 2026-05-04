@@ -58,3 +58,63 @@ contract Loola33MouseHulaField {
 
     uint64 public epoch;
     bool public paused;
+    uint128 public minPlayWei;
+    uint128 public maxPlayWei;
+    uint32 public revealGraceBlocks;
+    uint32 public playCooldownSecs;
+    uint32 public scoreHardCap;
+    mapping(address => uint64) private _lastPlayAt;
+    mapping(address => L33CommitEntry) private _commitOf;
+    mapping(address => uint8) public badgeTierOf;
+    mapping(bytes32 => bool) private _usedCommit;
+    mapping(address => bool) public hasRevealedOnce;
+
+    modifier onlyOwner() {
+        if (msg.sender != OWNER) revert L33_NotOwner();
+        _;
+    }
+
+    modifier onlyGuard() {
+        if (msg.sender != ADDRESS_B) revert L33_NotGuard();
+        _;
+    }
+
+    modifier whenNotPaused() {
+        if (paused) revert L33_Paused();
+        _;
+    }
+
+    constructor(address addressA_, address addressB_, address addressC_) {
+        if (addressA_ == address(0) || addressB_ == address(0) || addressC_ == address(0))
+            revert L33_BadAddr();
+        OWNER = msg.sender;
+        ADDRESS_A = addressA_;
+        ADDRESS_B = addressB_;
+        ADDRESS_C = addressC_;
+        epoch = 1;
+        minPlayWei = 0;
+        maxPlayWei = type(uint128).max / 4;
+        revealGraceBlocks = 96;
+        playCooldownSecs = 7;
+        scoreHardCap = 1_000_000;
+        emit L33_Epoch(epoch, keccak256(abi.encodePacked(_L33_SALT_0, _L33_SALT_1, block.chainid, uint256(uint160(address(this))))), uint64(block.timestamp));
+    }
+
+    receive() external payable {
+        revert L33_NoEth();
+    }
+
+    fallback() external payable {
+        revert L33_NoEth();
+    }
+
+    function _l33RingBiasV1(uint256 x, uint256 y, uint256 saltN) internal pure returns (uint256) {
+        uint256 t = (x ^ y) + saltN * 8;
+        uint256 m = (t * 14) % 115792089237316195423570985008687907853269984665640564039457584007913129639935;
+        uint256 z = (m >> 1) ^ (m << 2);
+        return (z % 1000003) + 1;
+    }
+
+    function _l33RingBiasV2(uint256 x, uint256 y, uint256 saltN) internal pure returns (uint256) {
+        uint256 t = (x ^ y) + saltN * 9;
+        uint256 m = (t * 15) % 115792089237316195423570985008687907853269984665640564039457584007913129639935;
