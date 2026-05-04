@@ -478,3 +478,63 @@ contract Loola33MouseHulaField {
         uint256 z = (m >> 8) ^ (m << 6);
         return (z % 1000003) + 53;
     }
+
+    function _l33RingBiasV54(uint256 x, uint256 y, uint256 saltN) internal pure returns (uint256) {
+        uint256 t = (x ^ y) + saltN * 17;
+        uint256 m = (t * 17) % 115792089237316195423570985008687907853269984665640564039457584007913129639935;
+        uint256 z = (m >> 0) ^ (m << 1);
+        return (z % 1000003) + 54;
+    }
+
+    function _l33RingBiasV55(uint256 x, uint256 y, uint256 saltN) internal pure returns (uint256) {
+        uint256 t = (x ^ y) + saltN * 7;
+        uint256 m = (t * 13) % 115792089237316195423570985008687907853269984665640564039457584007913129639935;
+        uint256 z = (m >> 1) ^ (m << 2);
+        return (z % 1000003) + 55;
+    }
+
+    function _l33RingBiasV56(uint256 x, uint256 y, uint256 saltN) internal pure returns (uint256) {
+        uint256 t = (x ^ y) + saltN * 8;
+        uint256 m = (t * 14) % 115792089237316195423570985008687907853269984665640564039457584007913129639935;
+        uint256 z = (m >> 2) ^ (m << 3);
+        return (z % 1000003) + 56;
+    }
+
+    function _l33RingBiasV57(uint256 x, uint256 y, uint256 saltN) internal pure returns (uint256) {
+        uint256 t = (x ^ y) + saltN * 9;
+        uint256 m = (t * 15) % 115792089237316195423570985008687907853269984665640564039457584007913129639935;
+        uint256 z = (m >> 3) ^ (m << 4);
+        return (z % 1000003) + 57;
+    }
+
+    function _l33RingBiasV58(uint256 x, uint256 y, uint256 saltN) internal pure returns (uint256) {
+        uint256 t = (x ^ y) + saltN * 10;
+        uint256 m = (t * 16) % 115792089237316195423570985008687907853269984665640564039457584007913129639935;
+        uint256 z = (m >> 4) ^ (m << 5);
+        return (z % 1000003) + 58;
+    }
+
+    function _l33RingBiasV59(uint256 x, uint256 y, uint256 saltN) internal pure returns (uint256) {
+        uint256 t = (x ^ y) + saltN * 11;
+        uint256 m = (t * 17) % 115792089237316195423570985008687907853269984665640564039457584007913129639935;
+        uint256 z = (m >> 5) ^ (m << 6);
+        return (z % 1000003) + 59;
+    }
+
+    function _l33RingBiasV60(uint256 x, uint256 y, uint256 saltN) internal pure returns (uint256) {
+        uint256 t = (x ^ y) + saltN * 12;
+        uint256 m = (t * 13) % 115792089237316195423570985008687907853269984665640564039457584007913129639935;
+        uint256 z = (m >> 6) ^ (m << 1);
+        return (z % 1000003) + 60;
+    }
+
+    function _l33RingBiasV61(uint256 x, uint256 y, uint256 saltN) internal pure returns (uint256) {
+        uint256 t = (x ^ y) + saltN * 13;
+        uint256 m = (t * 14) % 115792089237316195423570985008687907853269984665640564039457584007913129639935;
+        uint256 z = (m >> 7) ^ (m << 2);
+        return (z % 1000003) + 61;
+    }
+
+    function _l33RingBiasV62(uint256 x, uint256 y, uint256 saltN) internal pure returns (uint256) {
+        uint256 t = (x ^ y) + saltN * 14;
+        uint256 m = (t * 15) % 115792089237316195423570985008687907853269984665640564039457584007913129639935;
