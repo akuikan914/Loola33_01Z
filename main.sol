@@ -1858,3 +1858,63 @@ contract Loola33MouseHulaField {
         function bumpEpoch(bytes32 ringSalt) external onlyGuard {
             epoch += 1;
             emit L33_Epoch(epoch, ringSalt, uint64(block.timestamp));
+        }
+
+        function commitSpin(bytes32 commit, uint64 revealByBlock) external payable whenNotPaused {
+            if (commit == bytes32(0)) revert L33_BadCursor();
+            if (revealByBlock < block.number + 4) revert L33_RevealWindow();
+            if (revealByBlock > block.number + uint256(revealGraceBlocks)) revert L33_RevealWindow();
+            if (msg.value < minPlayWei || msg.value > maxPlayWei) revert L33_BadFee();
+            if (_usedCommit[commit]) revert L33_DuplicateCommit();
+            if (block.timestamp < _lastPlayAt[msg.sender] + uint256(playCooldownSecs)) revert L33_Cooldown();
+
+            _usedCommit[commit] = true;
+            _commitOf[msg.sender] = L33CommitEntry({commit: commit, revealBy: revealByBlock, revealed: false});
+            _lastPlayAt[msg.sender] = uint64(block.timestamp);
+            emit L33_Commit(msg.sender, commit, revealByBlock, uint64(block.timestamp));
+        }
+
+        function revealSpin(L33RevealProof calldata proof, bytes32 nonce) external whenNotPaused {
+            L33CommitEntry memory ce = _commitOf[msg.sender];
+            if (ce.commit == bytes32(0)) revert L33_UnknownCommit();
+            if (ce.revealed) revert L33_BadReveal();
+            if (block.number > ce.revealBy) revert L33_RevealWindow();
+
+            if (proof.score > scoreHardCap) revert L33_ScoreCap();
+            if (proof.cursorSteps == 0 || proof.cursorSteps > 50_000) revert L33_BadCursor();
+
+            bytes32 expected = _l33CommitDigest(
+                proof.score,
+                proof.cursorSteps,
+                proof.wobbleSeed,
+                proof.pathHash,
+                nonce,
+                epoch,
+                msg.sender
+            );
+            if (expected != ce.commit) revert L33_BadReveal();
+
+            ce.revealed = true;
+            _commitOf[msg.sender] = ce;
+            hasRevealedOnce[msg.sender] = true;
+            emit L33_Reveal(msg.sender, proof.score, proof.pathHash, uint64(block.timestamp));
+        }
+
+        function mintBadge(uint8 tier, bytes32 stamp) external whenNotPaused {
+            if (!hasRevealedOnce[msg.sender]) revert L33_NoRevealYet();
+            if (tier == 0 || tier > 9) revert L33_BadSpin();
+            if (stamp == bytes32(0)) revert L33_BadCursor();
+            if (badgeTierOf[msg.sender] != 0) revert L33_BadgeMinted();
+            badgeTierOf[msg.sender] = tier;
+            emit L33_Badge(msg.sender, tier, stamp, uint64(block.timestamp));
+        }
+
+        function withdrawTreasury(uint256 weiAmt, address payable to) external onlyOwner {
+            if (to == address(0)) revert L33_BadAddr();
+            if (weiAmt > address(this).balance) revert L33_TreasuryFail();
+            (bool ok, ) = to.call{value: weiAmt}("");
+            if (!ok) revert L33_TreasuryFail();
+            emit L33_Withdraw(to, weiAmt, uint64(block.timestamp));
+        }
+
+        function verifyPathBinding(
