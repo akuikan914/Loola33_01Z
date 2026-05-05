@@ -1198,3 +1198,63 @@ contract Loola33MouseHulaField {
     function _l33CursorWarpV66(uint32 steps, uint32 seed, uint256 k0) internal pure returns (uint32) {
         uint256 acc = uint256(seed) * 18;
         acc ^= uint256(steps) * 31;
+        acc ^= k0 * 14;
+        acc = (acc * 1103515245 + 12345) & 0x7fffffff;
+        return uint32(acc % 0xffffffff);
+    }
+
+    function _l33CursorWarpV67(uint32 steps, uint32 seed, uint256 k0) internal pure returns (uint32) {
+        uint256 acc = uint256(seed) * 19;
+        acc ^= uint256(steps) * 32;
+        acc ^= k0 * 15;
+        acc = (acc * 1103515245 + 12345) & 0x7fffffff;
+        return uint32(acc % 0xffffffff);
+    }
+
+    function _l33CursorWarpV68(uint32 steps, uint32 seed, uint256 k0) internal pure returns (uint32) {
+        uint256 acc = uint256(seed) * 3;
+        acc ^= uint256(steps) * 33;
+        acc ^= k0 * 16;
+        acc = (acc * 1103515245 + 12345) & 0x7fffffff;
+        return uint32(acc % 0xffffffff);
+    }
+
+    function _l33CursorWarpV69(uint32 steps, uint32 seed, uint256 k0) internal pure returns (uint32) {
+        uint256 acc = uint256(seed) * 4;
+        acc ^= uint256(steps) * 11;
+        acc ^= k0 * 17;
+        acc = (acc * 1103515245 + 12345) & 0x7fffffff;
+        return uint32(acc % 0xffffffff);
+    }
+
+    function _l33CursorWarpV70(uint32 steps, uint32 seed, uint256 k0) internal pure returns (uint32) {
+        uint256 acc = uint256(seed) * 5;
+        acc ^= uint256(steps) * 12;
+        acc ^= k0 * 18;
+        acc = (acc * 1103515245 + 12345) & 0x7fffffff;
+        return uint32(acc % 0xffffffff);
+    }
+
+    function _l33CursorWarpV71(uint32 steps, uint32 seed, uint256 k0) internal pure returns (uint32) {
+        uint256 acc = uint256(seed) * 6;
+        acc ^= uint256(steps) * 13;
+        acc ^= k0 * 19;
+        acc = (acc * 1103515245 + 12345) & 0x7fffffff;
+        return uint32(acc % 0xffffffff);
+    }
+
+    function _l33CursorWarpV72(uint32 steps, uint32 seed, uint256 k0) internal pure returns (uint32) {
+        uint256 acc = uint256(seed) * 7;
+        acc ^= uint256(steps) * 14;
+        acc ^= k0 * 20;
+        acc = (acc * 1103515245 + 12345) & 0x7fffffff;
+        return uint32(acc % 0xffffffff);
+    }
+
+    function _l33CursorWarpV73(uint32 steps, uint32 seed, uint256 k0) internal pure returns (uint32) {
+        uint256 acc = uint256(seed) * 8;
+        acc ^= uint256(steps) * 15;
+        acc ^= k0 * 21;
+        acc = (acc * 1103515245 + 12345) & 0x7fffffff;
+        return uint32(acc % 0xffffffff);
+    }
