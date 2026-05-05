@@ -1798,3 +1798,63 @@ contract Loola33MouseHulaField {
         return uint32(t % 1000001);
     }
 
+    function _l33HulaTorqueV70(uint32 w0, uint32 w1, uint32 w2) internal pure returns (uint32) {
+        uint256 t = uint256(w0) * 73 + uint256(w1) * 77 + uint256(w2) * 81;
+        t = (t ^ (t >> 17)) * 0xed5ad4bb;
+        t ^= (t >> 11);
+        return uint32(t % 1000001);
+    }
+    function _l33CommitDigest(
+            uint32 score,
+            uint32 cursorSteps,
+            uint32 wobbleSeed,
+            bytes32 pathHash,
+            bytes32 nonce,
+            uint64 epoch_,
+            address who
+        ) internal view returns (bytes32) {
+            return keccak256(
+                abi.encodePacked(
+                    uint256(score),
+                    uint256(cursorSteps),
+                    uint256(wobbleSeed),
+                    pathHash,
+                    nonce,
+                    uint256(epoch_),
+                    who,
+                    _L33_SALT_2,
+                    _L33_SALT_3
+                )
+            );
+        }
+
+        function setPaused(bool v) external onlyOwner {
+            paused = v;
+            emit L33_Pause(v, uint64(block.timestamp));
+        }
+
+        function setFeeBand(uint128 minWei, uint128 maxWei) external onlyOwner {
+            if (minWei > maxWei) revert L33_BadFee();
+            minPlayWei = minWei;
+            maxPlayWei = maxWei;
+            emit L33_FeeTuned(minWei, maxWei, uint64(block.timestamp));
+        }
+
+        function setRevealGrace(uint32 blocks_) external onlyOwner {
+            if (blocks_ < 8 || blocks_ > 50_000) revert L33_BadEpoch();
+            revealGraceBlocks = blocks_;
+        }
+
+        function setPlayCooldown(uint32 secs_) external onlyOwner {
+            if (secs_ > 86_400) revert L33_BadEpoch();
+            playCooldownSecs = secs_;
+        }
+
+        function setScoreHardCap(uint32 cap_) external onlyOwner {
+            if (cap_ < 1000) revert L33_ScoreCap();
+            scoreHardCap = cap_;
+        }
+
+        function bumpEpoch(bytes32 ringSalt) external onlyGuard {
+            epoch += 1;
+            emit L33_Epoch(epoch, ringSalt, uint64(block.timestamp));
