@@ -1738,3 +1738,63 @@ contract Loola33MouseHulaField {
     function _l33HulaTorqueV61(uint32 w0, uint32 w1, uint32 w2) internal pure returns (uint32) {
         uint256 t = uint256(w0) * 64 + uint256(w1) * 68 + uint256(w2) * 72;
         t = (t ^ (t >> 17)) * 0xed5ad4bb;
+        t ^= (t >> 11);
+        return uint32(t % 1000001);
+    }
+
+    function _l33HulaTorqueV62(uint32 w0, uint32 w1, uint32 w2) internal pure returns (uint32) {
+        uint256 t = uint256(w0) * 65 + uint256(w1) * 69 + uint256(w2) * 73;
+        t = (t ^ (t >> 17)) * 0xed5ad4bb;
+        t ^= (t >> 11);
+        return uint32(t % 1000001);
+    }
+
+    function _l33HulaTorqueV63(uint32 w0, uint32 w1, uint32 w2) internal pure returns (uint32) {
+        uint256 t = uint256(w0) * 66 + uint256(w1) * 70 + uint256(w2) * 74;
+        t = (t ^ (t >> 17)) * 0xed5ad4bb;
+        t ^= (t >> 11);
+        return uint32(t % 1000001);
+    }
+
+    function _l33HulaTorqueV64(uint32 w0, uint32 w1, uint32 w2) internal pure returns (uint32) {
+        uint256 t = uint256(w0) * 67 + uint256(w1) * 71 + uint256(w2) * 75;
+        t = (t ^ (t >> 17)) * 0xed5ad4bb;
+        t ^= (t >> 11);
+        return uint32(t % 1000001);
+    }
+
+    function _l33HulaTorqueV65(uint32 w0, uint32 w1, uint32 w2) internal pure returns (uint32) {
+        uint256 t = uint256(w0) * 68 + uint256(w1) * 72 + uint256(w2) * 76;
+        t = (t ^ (t >> 17)) * 0xed5ad4bb;
+        t ^= (t >> 11);
+        return uint32(t % 1000001);
+    }
+
+    function _l33HulaTorqueV66(uint32 w0, uint32 w1, uint32 w2) internal pure returns (uint32) {
+        uint256 t = uint256(w0) * 69 + uint256(w1) * 73 + uint256(w2) * 77;
+        t = (t ^ (t >> 17)) * 0xed5ad4bb;
+        t ^= (t >> 11);
+        return uint32(t % 1000001);
+    }
+
+    function _l33HulaTorqueV67(uint32 w0, uint32 w1, uint32 w2) internal pure returns (uint32) {
+        uint256 t = uint256(w0) * 70 + uint256(w1) * 74 + uint256(w2) * 78;
+        t = (t ^ (t >> 17)) * 0xed5ad4bb;
+        t ^= (t >> 11);
+        return uint32(t % 1000001);
+    }
+
+    function _l33HulaTorqueV68(uint32 w0, uint32 w1, uint32 w2) internal pure returns (uint32) {
+        uint256 t = uint256(w0) * 71 + uint256(w1) * 75 + uint256(w2) * 79;
+        t = (t ^ (t >> 17)) * 0xed5ad4bb;
+        t ^= (t >> 11);
+        return uint32(t % 1000001);
+    }
+
+    function _l33HulaTorqueV69(uint32 w0, uint32 w1, uint32 w2) internal pure returns (uint32) {
+        uint256 t = uint256(w0) * 72 + uint256(w1) * 76 + uint256(w2) * 80;
+        t = (t ^ (t >> 17)) * 0xed5ad4bb;
+        t ^= (t >> 11);
+        return uint32(t % 1000001);
+    }
+
