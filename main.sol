@@ -1918,3 +1918,44 @@ contract Loola33MouseHulaField {
         }
 
         function verifyPathBinding(
+            uint32 score,
+            uint32 cursorSteps,
+            uint32 wobbleSeed,
+            bytes32 pathHash,
+            bytes32 nonce,
+            address who,
+            uint64 epoch_,
+            bytes32 commit
+        ) external view returns (bool ok) {
+            bytes32 expected = _l33CommitDigest(score, cursorSteps, wobbleSeed, pathHash, nonce, epoch_, who);
+            ok = (expected == commit);
+        }
+
+        function previewCommit(
+            uint32 score,
+            uint32 cursorSteps,
+            uint32 wobbleSeed,
+            bytes32 pathHash,
+            bytes32 nonce,
+            address who,
+            uint64 epoch_
+        ) external view returns (bytes32) {
+            return _l33CommitDigest(score, cursorSteps, wobbleSeed, pathHash, nonce, epoch_, who);
+        }
+
+        function witnessLine() external view returns (address) {
+            return ADDRESS_C;
+        }
+
+        function riskAdjustedScore(uint32 raw, uint32 cursorSteps, uint32 wobbleSeed) external view returns (uint32) {
+            uint256 x = uint256(raw);
+            uint256 y = uint256(cursorSteps);
+            uint256 s = uint256(wobbleSeed);
+            uint256 rb = _l33RingBiasV19(x, y, s + uint256(epoch));
+            uint256 cw = _l33CursorWarpV23(cursorSteps, wobbleSeed, rb);
+            uint32 tq = _l33HulaTorqueV31(uint32(rb % 100000), uint32(cw % 100000), uint32((rb ^ cw) % 100000));
+            uint256 out = (uint256(raw) * 97 + uint256(tq) * 3) / 100;
+            if (out > uint256(scoreHardCap)) return scoreHardCap;
+            return uint32(out);
+        }
+}
